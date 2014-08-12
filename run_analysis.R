@@ -11,8 +11,9 @@ run_analysis <- function( dataFiles ) {
 ## ------------------------------------
 ## Prerequisites
 ##
-## WD - Working directory for the analysis.  
-## DL - Datafile location
+## EWD - Existing working directory - to be restored at the end of the analysis
+## WD  - Working directory for the analysis.  
+## DL  - Datafile location
   EWD <- getwd()
   WD <- "/Users/woodst/Dropbox/Coursera/DataScience/GetCleanData/project2"                        
   URL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
