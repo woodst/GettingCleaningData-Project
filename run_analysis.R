@@ -11,6 +11,10 @@ run_analysis <- function( dataFiles ) {
 ## ------------------------------------
 ## Prerequisites
 ##
+## Package dependencies:
+## utils
+##
+## Constants:
 ## EWD - Existing working directory - to be restored at the end of the analysis
 ## WD  - Working directory for the analysis.  
 ## DL  - Datafile location
@@ -27,17 +31,39 @@ run_analysis <- function( dataFiles ) {
   file <- unlist( strsplit(URL, "[/]") )
   file <- paste( WD, "/", file[ length(file) ] , sep="" )
 
+
+  print("Checking for existing data...")
+  
   if ( !file.exists( WD ) ) {
     dir.create( WD )
   }
+  else  {
+    print("Directory found, searching for archive...")
+  }
   
+
   setwd( WD )
 
   if ( !file.exists( file )) {
+    print("Downloading data archive...")
     download.file(URL, file, "curl")
   }
+  else {
+    print("Archive found.")
+  }
+
 
 ## ------------------------------------
+## Expand the zip archive
+  print("Expanding data archive...")
+  unzip( file, exdir = WD )
+
+
+## ------------------------------------
+## Assignment part 1: Merge training and test data sets
+  print("(Assignment 1: Merging test and training data...")
+  
+  
 
 
 
