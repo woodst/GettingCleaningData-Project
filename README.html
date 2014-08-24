@@ -137,6 +137,10 @@ hr {
 
 
 
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
 
 
 </head>
@@ -152,25 +156,17 @@ hr {
 
 <p>This is the main script, capable of downloading and decompressing the assignment data file if it isn&#39;t already available, then stepping through the assignment requirements one by one to produce the required output.</p>
 
+<p>The WD variable is set to the working directory. The script will run if the dataset zip file exists in the working directory.  If the file is not in the working directory, the script will download it.  The MD variable holds the name of the directory that will hold merged data.</p>
+
+<h2>Dependencies</h2>
+
 <blockquote>
-<ul>
-<li>YOU MUST DEFINE THE WD CONSTANT BEFORE RUNNING THIS SCRIPT! *</li>
-</ul>
+<p>Packages</p>
+
+<blockquote>
+<p>utils, dplyr</p>
 </blockquote>
-
-<p>WD sets the working directory, and the script will fail if your system doesn&#39;t have the directory listed.  Also, don&#39;t end your WD with a &#39;/&#39;.</p>
-
-<h2>Other Constants</h2>
-
-<ul>
-<li>URL is the location of the data file for this assignment.  You probably don&#39;t need to change it.</li>
-<li>EWD isn&#39;t really a constant, but is set by the script to be whatever working directory is yours prior to changing to WD.  The script retores you to your previous working directory before exiting.</li>
-<li>VARINDEX is a vector containing the column numbers of all the variables required for the assignment</li>
-</ul>
-
-<h2>Package Dependencies</h2>
-
-<p>utils</p>
+</blockquote>
 
 <h2>Usage</h2>
 
@@ -179,7 +175,12 @@ hr {
 <pre><code>run_analysis.R() 
 </code></pre>
 
-<p>in the R console.  The first time you run the script it will create the WD directory and download and expand the dataset.</p>
+<p>in the R console.  The first time you run the script it will create the MD directory and download and expand the dataset.
+The script will unzip the data file into the &ldquo;UCI Har Dataset&rdquo; directory and then proceed to merge the test and training data into a single data set that resides in the directory specified by MD. If you need to run the script again, it can detect the data file and will skip downloading it</p>
+
+<p>The script then generates the two tidy data sets, per the assignment instructions.</p>
+
+<p>Run time on my Macbook Pro ( 2.4Ghz core 2 duo with 4GB of RAM ) is about three minutes.  The script will display it&#39;s progress as it executes.</p>
 
 <h1>Assumptions</h1>
 
@@ -187,36 +188,21 @@ hr {
 
 <p>The following assumptions were made about the assignment.  On a personal note, many years of IT experience have taught me that requirements are always vaugue, and that some judgement is necessary to complete work on schedule. You can&#39;t always go back to the client to ask what they meant.  Often they can&#39;t tell you.  It is in that spirit that I submit these assumptions, because within the &ldquo;science&rdquo; part of Data Science is the ability to discuss what is vague, what I know and don&#39;t know, and what I did about it.</p>
 
-<h2>Initial Assignment, consolidated for reference</h2>
-
-<ul>
-<li>GOAL: prepare tidy data that can be used for later analysis</li>
-<li>DELIVERABLES: 
-
-<ul>
-<li>a tidy data set</li>
-<li>an R scripot called run_analysis() that:
-
-<ul>
-<li>Merges the training and the test sets to create one data set.</li>
-<li>Extracts only the measurements on the mean and standard deviation for each measurement. </li>
-<li>Uses descriptive activity names to name the activities in the data set</li>
-<li>Appropriately labels the data set with descriptive variable names. </li>
-<li>Creates a second, independent tidy data set with the average of each variable for each activity and each subject.</li>
-</ul></li>
-<li>a CodeBook.md</li>
-<li>a README.md (which you are reading right now)</li>
-<li>a GitHub repository </li>
-</ul></li>
-</ul>
-
-<h2>detailed assumptions</h2>
+<h2>Assumption #1: All data should be combined</h2>
 
 <ol>
 <li>The combined test and training datasets include ALL of the data in a new directory using the same structure as the existing test and train directories, with everything moved up one level (since &#39;train&#39; and &#39;test&#39; directories are no longer needed).  Even though we never use the data in the Inertial Signals directories, this is merged as well into the final data set stored in the UCIMerged directory.</li>
 </ol>
 
-<p><a href="https://class.coursera.org/getdata-006/forum/thread?thread_id=196">https://class.coursera.org/getdata-006/forum/thread?thread_id=196</a></p>
+<h2>Assumption #2: What&#39;s in, not in the tidy data sets</h2>
+
+<p>For Tidy Data Set #1, the subject ID, a descriptive version of the activities, and 66 columns of data that represent mean and standard deviation are included.</p>
+
+<p>For Tidy Data Set #2, ALL of the variables are used, with the mean of each grouped by subject and within subject by activity.  30 subjects X 6 activities = 180 Rows.  There are 563 columns total in this data set.</p>
+
+<h2>Generation of column names</h2>
+
+<p>The default column names have punctuation in the form of commas and parentheses that can confuse some of the functions.  These are stripped using regex &ldquo;[\\( \ \),]+&rdquo;, which results in slightly different column names over the original data set.  These are documented in the code book.</p>
 
 </body>
 

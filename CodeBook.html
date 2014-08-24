@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Summary</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<p>CodeBook.md</p>
+
+<h1>Summary</h1>
+
+<p>In creating the second tidy dataset for this assignment, ALL of the variable names have had parenthesis and commas stripped, if they had them in the first place.  This means many of the columns have been renamed.  The existing column for subjects has been renamed to &ldquo;subject&rdquo;, and the numeric activity coding has been replaced with descriptive activities and the column named &ldquo;activity&rdquo;.  For each variable the mean has been calculated from the subset of each subject for each activity.  The numeric data in each of the 561 numeric columns is one of these averages.  The use of all 561 variables is predicated on the wording of our assignment, which asked for &ldquo;the average of each variables for each activity for each subject&rdquo;.  There seemed to be a consensus developing in the forums that only the 66 variables from the first tidy data set needed to be used, but that seems like a leap, given the way part 5 was worded.</p>
+
+<p>The 561 variables have been slightly renamed to avoid incompatibility with some of the functions and libraries.  Specifically, each name was stripped of any parentheses and commas, and everything else was left.  For this data set, there are 180 rows (30 subjects X 6 activities each) and 561 variables, each of which is a numeric data type that holds an average score summarized from a large dataset for each subject and each activity.</p>
+
+<p>The larger data set from which this summary is derived is itself a consolidation of the training and test datasets that were included with the original Samsung data.  These two datasets were merged as follows:</p>
+
+<p><code></p>
+
+<blockquote>
+<p>UCI HAR Dataset/test/subject_test.txt + UCI HAR Dataset/train/subject_train.txt -&gt; UCIMerged/subject.txt</p>
+
+<p>UCI HAR Dataset/test/y_test.txt + UCI HAR Dataset/train/y_train.txt -&gt; UCIMerged/y.txt</p>
+
+<p>UCI HAR Dataset/test/X_test.txt + UCI HAR Dataset/train/X_train.txt -&gt; UCIMerged/X.txt</p>
+
+<p>UCI HAR Dataset/test/Inertial Signals/body_acc_x_test.txt + UCI HAR Dataset/train/Inertial Signals/body_acc_x_train.txt -&gt; UCIMerged/Inertial Signals/body_acc_x.txt</p>
+
+<p>UCI HAR Dataset/test/Inertial Signals/body_acc_y_test.txt + UCI HAR Dataset/train/Inertial Signals/body_acc_y_train.txt -&gt; UCIMerged/Inertial Signals/body_acc_y.txt</p>
+
+<p>UCI HAR Dataset/test/Inertial Signals/body_acc_z_test.txt + UCI HAR Dataset/train/Inertial Signals/body_acc_z_train.txt -&gt; UCIMerged/Inertial Signals/body_acc_z.txt</p>
+
+<p>UCI HAR Dataset/test/Inertial Signals/body_gyro_x_test.txt + UCI HAR Dataset/train/Inertial Signals/body_gyro_x_train.txt -&gt; UCIMerged/Inertial Signals/body_gyro_x.txt</p>
+
+<p>UCI HAR Dataset/test/Inertial Signals/body_gyro_y_test.txt + UCI HAR Dataset/train/Inertial Signals/body_gyro_y_train.txt -&gt; UCIMerged/Inertial Signals/body_gyro_y.txt</p>
+
+<p>UCI HAR Dataset/test/Inertial Signals/body_gyro_z_test.txt + UCI HAR Dataset/train/Inertial Signals/body_gyro_z_train.txt -&gt; UCIMerged/Inertial Signals/body_gyro_z.txt</p>
+
+<p>UCI HAR Dataset/test/Inertial Signals/total_acc_x_test.txt + UCI HAR Dataset/train/Inertial Signals/total_acc_x_train.txt -&gt; UCIMerged/Inertial Signals/total_acc_x.txt</p>
+
+<p>UCI HAR Dataset/test/Inertial Signals/total_acc_y_test.txt + UCI HAR Dataset/train/Inertial Signals/total_acc_y_train.txt -&gt; UCIMerged/Inertial Signals/total_acc_y.txt</p>
+
+<p>UCI HAR Dataset/test/Inertial Signals/total_acc_z_test.txt + UCI HAR Dataset/train/Inertial Signals/total_acc_z_train.txt -&gt; UCIMerged/Inertial Signals/total_acc_z.txt</p>
+</blockquote>
+
+<p>Files that didn&#39;t need merging were simply copied:</p>
+
+<blockquote>
+<p>UCI HAR Dataset/activity_labels.txt -&gt; UCIMerged/activity_labels.txt</p>
+
+<p>UCI HAR Dataset/features_info.txt -&gt; UCIMerged/features_info.txt</p>
+
+<p>UCI HAR Dataset/features.txt -&gt; UCIMerged/features.txt </p>
+
+<p>UCI HAR Dataset/README.txt -&gt; UCIMerged/README.txt </p>
+</blockquote>
+
+<p></code></p>
+
+<h1>Variables</h1>
+
+<pre>
+        Variable                        Type          Min             Max           Notes
+  1     subject                       Int           1               30            
+  2     activity                        Factor      1               6             LAYING  
+                                                                            SITTING  
+                                                                            STANDING  
+                                                                            WALKING      
+                                                                            WALKING_DOWNSTAIRS  
+                                                                            WALKING_UPSTAIRS                                                                                                                                                    
+  3     tBodyAcc.mean.X             Numeric     0.225919184   0.30725707    
+  4     tBodyAcc.mean.Y             Numeric     -0.060699958  0.03020523    
+  5     tBodyAcc.mean.Z             Numeric     -0.132705612    -0.076168547    
+  6     tBodyAcc.std.X              Numeric     -0.993845935    0.192008021 
+  7     tBodyAcc.std.Y              Numeric     -0.983921192    0.589339643 
+  8     tBodyAcc.std.Z              Numeric     -0.982079739    0.168030938 
+  9     tBodyAcc.mad.X              Numeric     -0.994580571    0.146814307 
+  10      tBodyAcc.mad.Y                Numeric     -0.983903736    0.552844076 
+  11    tBodyAcc.mad.Z              Numeric     -0.981777614    0.110933995 
+  12      tBodyAcc.max.X                Numeric     -0.937727953    0.438485815 
+  13      tBodyAcc.max.Y                Numeric     -0.566965705    0.138739039 
+  14      tBodyAcc.max.Z                Numeric     -0.815354086    -0.022499057    
+  15      tBodyAcc.min.X                Numeric     -0.129886502    0.846382512 
+  16      tBodyAcc.min.Y                Numeric     -0.400907071    0.688569748
+  17      tBodyAcc.min.Z                Numeric     -0.038630532    0.839327685
+  18      tBodyAcc.sma                Numeric       -0.987594884    0.249789217
+  19      tBodyAcc.energy.X           Numeric       -0.999929548    -0.218993001
+  20    tBodyAcc.energy.Y             Numeric       -0.999829587    -0.506007437
+  21      tBodyAcc.energy.Z           Numeric       -0.999426887    -0.268941699
+  22    tBodyAcc.iqr.X              Numeric     -0.995031864    0.074129298
+  23      tBodyAcc.iqr.Y                Numeric     -0.985751668    0.148899497
+  24    tBodyAcc.iqr.Z              Numeric     -0.980924109    0.011547503
+  25    tBodyAcc.entropy.X          Numeric     -0.6291903    0.529709883
+  26    tBodyAcc.entropy.Y          Numeric     -0.625561179    0.439135926
+  27    tBodyAcc.entropy.Z          Numeric     -0.559949224    0.360062973
+  28    tBodyAcc.arCoeff.X1         Numeric     -0.478637331    0.239321545
+  29    tBodyAcc.arCoeff.X2         Numeric     -0.133465923    0.403735626
+  30    tBodyAcc.arCoeff.X3         Numeric     -0.373724126    0.182604208
+  31    tBodyAcc.arCoeff.X4         Numeric     -0.194662277    0.473220386
+  32    tBodyAcc.arCoeff.Y1         Numeric     -0.318152767    0.319411643
+  33    tBodyAcc.arCoeff.Y2         Numeric     -0.163490843    0.293061741
+  34    tBodyAcc.arCoeff.Y3         Numeric     -0.068409186    0.294811995
+  35    tBodyAcc.arCoeff.Y4         Numeric     -0.192360465    0.226150206
+  36    tBodyAcc.arCoeff.Z1         Numeric     -0.358905527    0.337368711
+  37    tBodyAcc.arCoeff.Z2         Numeric     -0.148821629    0.306699338
+  38    tBodyAcc.arCoeff.Z3         Numeric     -0.235159514    0.194600866
+  39    tBodyAcc.arCoeff.Z4         Numeric     -0.31493049   0.270615915
+  40    tBodyAcc.correlation.XY     Numeric     -0.509589761    0.393990175
+  41    tBodyAcc.correlation.XZ     Numeric     -0.640801596    0.317017635
+  42    tBodyAcc.correlation.YZ     Numeric     -0.455973709    0.448156545
+  43    tGravityAcc.mean.X          Numeric     -0.48761312   0.965794769
+  44    tGravityAcc.mean.Y          Numeric     -0.390161363    0.773547821
+  45    tGravityAcc.mean.Z          Numeric     -0.463068449    0.832025618
+  46    tGravityAcc.std.X             Numeric       -0.995563869    -0.908103661
+  47    tGravityAcc.std.Y             Numeric       -0.99358398   -0.70574264
+  48    tGravityAcc.std.Z             Numeric       -0.990461658    -0.759421892
+  49    tGravityAcc.mad.X             Numeric       -0.995704019    -0.909108338
+  50    tGravityAcc.mad.Y             Numeric       -0.993685187    -0.709396877
+  51    tGravityAcc.mad.Z             Numeric       -0.990428232    -0.764673011
+  52    tGravityAcc.max.X             Numeric       -0.541044876    0.898932252
+  53    tGravityAcc.max.Y             Numeric       -0.393026024    0.731634228
+  54    tGravityAcc.max.Z             Numeric       -0.460457935    0.820010997
+  55    tGravityAcc.min.X             Numeric       -0.447600134    0.977257737
+  56    tGravityAcc.min.Y             Numeric       -0.37254998   0.785056011
+  57    tGravityAcc.min.Z             Numeric       -0.465702885    0.83016689
+  58    tGravityAcc.sma             Numeric     -0.631621812    0.492930656
+  59    tGravityAcc.energy.X          Numeric       -0.958248704    0.905846151
+  60    tGravityAcc.energy.Y          Numeric       -0.992738065    0.318183079
+  61    tGravityAcc.energy.Z          Numeric       -0.999119875    0.381090062
+  62    tGravityAcc.iqr.X             Numeric       -0.995992078    -0.911696551
+  63    tGravityAcc.iqr.Y             Numeric       -0.994084256    -0.723238144
+  64    tGravityAcc.iqr.Z             Numeric       -0.990530688    -0.781817384
+  65    tGravityAcc.entropy.X         Numeric       -1            -0.194598503
+  66    tGravityAcc.entropy.Y         Numeric       -1            -0.487773946
+  67    tGravityAcc.entropy.Z         Numeric       -1            0.032112669
+  68    tGravityAcc.arCoeff.X1      Numeric     -0.681120053    -0.279202197
+  69    tGravityAcc.arCoeff.X2      Numeric     0.306226552   0.719658337
+  70    tGravityAcc.arCoeff.X3      Numeric     -0.771874083    -0.333455395
+  71    tGravityAcc.arCoeff.X4      Numeric     0.360967967   0.834240747
+  72    tGravityAcc.arCoeff.Y1      Numeric     -0.714050913    0.042835215
+  73    tGravityAcc.arCoeff.Y2      Numeric     -0.077273616    0.69924352
+  74    tGravityAcc.arCoeff.Y3      Numeric     -0.703271417    0.044275329
+  75    tGravityAcc.arCoeff.Y4      Numeric     0.015189438   0.715352453
+  76    tGravityAcc.arCoeff.Z1      Numeric     -0.764478511    -0.0883873
+  77    tGravityAcc.arCoeff.Z2      Numeric     0.141084564   0.783917396
+  78    tGravityAcc.arCoeff.Z3      Numeric     -0.802736608    -0.179894777
+  79    tGravityAcc.arCoeff.Z4      Numeric     0.21555948    0.817803273
+  80    tGravityAcc.correlation.XY  Numeric     -0.658580911    0.78015902
+  81    tGravityAcc.correlation.XZ  Numeric     -0.802391481    0.704499192
+  82    tGravityAcc.correlation.YZ  Numeric     -0.746203014    0.666704327
+  83    tBodyAccJerk.mean.X         Numeric     0.041019591   0.126484579
+  84    tBodyAccJerk.mean.Y         Numeric     -0.055925981    0.048425729
+  85    tBodyAccJerk.mean.Z         Numeric     -0.058443871    0.03751986
+  86    tBodyAccJerk.std.X          Numeric     -0.99353393   0.189934817
+  87    tBodyAccJerk.std.Y          Numeric     -0.988737717    0.306208625
+  88    tBodyAccJerk.std.Z          Numeric     -0.991321435    -0.07583758
+  89    tBodyAccJerk.mad.X          Numeric     -0.993705589    0.213211834
+  90    tBodyAccJerk.mad.Y          Numeric     -0.987533121    0.26419203
+  91    tBodyAccJerk.mad.Z          Numeric     -0.990535352    -0.056254734
+  92    tBodyAccJerk.max.X          Numeric     -0.993698129    -0.015184848
+  93    tBodyAccJerk.max.Y          Numeric     -0.991714108    -0.172638677
+  94    tBodyAccJerk.max.Z          Numeric     -0.990847579    -0.31325117
+  95    tBodyAccJerk.min.X          Numeric     -0.21676059   0.991566783
+  96    tBodyAccJerk.min.Y          Numeric     -0.213396535    0.99185394
+  97    tBodyAccJerk.min.Z          Numeric     -0.013729392    0.987836898
+  98    tBodyAccJerk.sma              Numeric       -0.992741598    0.16312366
+  99    tBodyAccJerk.energy.X         Numeric       -0.99992348   -0.225721118
+  100   tBodyAccJerk.energy.Y         Numeric       -0.999801753    -0.122296095
+  101   tBodyAccJerk.energy.Z         Numeric       -0.999822134    -0.541911844
+  102   tBodyAccJerk.iqr.X          Numeric     -0.992935944    0.250912515
+  103   tBodyAccJerk.iqr.Y          Numeric     -0.987468053    0.152886391
+  104   tBodyAccJerk.iqr.Z          Numeric     -0.989311139    -0.135766741
+  105   tBodyAccJerk.entropy.X      Numeric     -0.802168224    0.752455231
+  106   tBodyAccJerk.entropy.Y      Numeric     -0.806380498    0.705581214
+  107   tBodyAccJerk.entropy.Z      Numeric     -0.759317       0.6888693
+  108   tBodyAccJerk.arCoeff.X1    Numeric      -0.477199497    0.248880917
+  109   tBodyAccJerk.arCoeff.X2     Numeric     0.029597144   0.316782019
+  110   tBodyAccJerk.arCoeff.X3     Numeric     -0.180667007    0.279578561
+  111   tBodyAccJerk.arCoeff.X4     Numeric     -0.11420909   0.297339306
+  112   tBodyAccJerk.arCoeff.Y1     Numeric     -0.384168831    0.218042157
+  113   tBodyAccJerk.arCoeff.Y2     Numeric     -0.144522792    0.279826906
+  114   tBodyAccJerk.arCoeff.Y3     Numeric     -0.048548663    0.348956441
+  115   tBodyAccJerk.arCoeff.Y4     Numeric     0.126693717   0.479712845
+  116   tBodyAccJerk.arCoeff.Z1     Numeric     -0.426095445    0.226252014
+  117   tBodyAccJerk.arCoeff.Z2     Numeric     -0.085055873    0.254714019
+  118   tBodyAccJerk.arCoeff.Z3     Numeric     -0.34614127   0.194407085
+  119   tBodyAccJerk.arCoeff.Z4     Numeric     -0.171473879    0.356689226
+  120   tBodyAccJerk.correlation.XY Numeric     -0.451624592    0.242932605
+  121   tBodyAccJerk.correlation.XZ Numeric     -0.408929055    0.377289503
+  122   tBodyAccJerk.correlation.YZ Numeric     -0.351265256    0.503459899
+  123   tBodyGyro.mean.X            Numeric     -0.145298891    0.11168261
+  124   tBodyGyro.mean.Y            Numeric     -0.184344351    0.017103431
+  125   tBodyGyro.mean.Z              Numeric       0.008324431   0.166486784
+  126   tBodyGyro.std.X             Numeric     -0.992040879    -0.039565485
+  127   tBodyGyro.std.Y             Numeric     -0.988790939    0.091334423
+  128   tBodyGyro.std.Z             Numeric     -0.984773115    0.162642066
+  129   tBodyGyro.mad.X             Numeric     -0.992352588    -0.041850243
+  130   tBodyGyro.mad.Y             Numeric     -0.989278063    0.053935448
+  131   tBodyGyro.mad.Z             Numeric     -0.986261486    0.073943671
+  132   tBodyGyro.max.X             Numeric     -0.884101729    -0.084755117
+  133   tBodyGyro.max.Y             Numeric     -0.950811215    -0.006294144
+  134   tBodyGyro.max.Z             Numeric     -0.758307408    0.104244388
+  135   tBodyGyro.min.X             Numeric     0.100532795   0.841534483
+  136   tBodyGyro.min.Y             Numeric     0.130809672   0.908879875
+  137   tBodyGyro.min.Z             Numeric     -0.19112112   0.821355364
+  138   tBodyGyro.sma                 Numeric       -0.976633879    0.154844448
+  139   tBodyGyro.energy.X          Numeric     -0.999800186    -0.4803232
+  140   tBodyGyro.energy.Y          Numeric     -0.99962865   -0.336358908
+  141   tBodyGyro.energy.Z          Numeric     -0.999356337    -0.355219887
+  142   tBodyGyro.iqr.X             Numeric     -0.992621325    -0.025557634
+  143   tBodyGyro.iqr.Y             Numeric     -0.989957462     0.056741653
+  144   tBodyGyro.iqr.Z             Numeric     -0.99033902   -0.182336367
+  145   tBodyGyro.entropy.X         Numeric     -0.595538891    0.299844094
+  146   tBodyGyro.entropy.Y         Numeric     -0.488911989    0.283827477
+  147   tBodyGyro.entropy.Z         Numeric     -0.557707997    0.443068963
+  148   tBodyGyro.arCoeff.X1          Numeric       -0.577043508    0.217700941
+  149   tBodyGyro.arCoeff.X2          Numeric       -0.133239577    0.397185495
+  150   tBodyGyro.arCoeff.X3          Numeric       -0.146427221    0.302521098
+  151   tBodyGyro.arCoeff.X4          Numeric       -0.36406426   0.208136842
+  152   tBodyGyro.arCoeff.Y1          Numeric       -0.469667485    0.051014842
+  153   tBodyGyro.arCoeff.Y2          Numeric       -0.062668199    0.44281095
+  154   tBodyGyro.arCoeff.Y3          Numeric       -0.288611439    0.176951948
+  155   tBodyGyro.arCoeff.Y4          Numeric       -0.09295686   0.426797552
+  156   tBodyGyro.arCoeff.Z1          Numeric       -0.535028352    0.268590785
+  157   tBodyGyro.arCoeff.Z2          Numeric       -0.23088648   0.447335039
+  158   tBodyGyro.arCoeff.Z3          Numeric       -0.35603455   0.218229556
+  159   tBodyGyro.arCoeff.Z4          Numeric       -0.07863263   0.596359733
+  160   tBodyGyro.correlation.XY      Numeric       -0.636425315    0.319073345
+  161   tBodyGyro.correlation.XZ      Numeric       -0.370320627    0.475230746
+  162   tBodyGyro.correlation.YZ      Numeric       -0.612529537    0.40431185
+  163   tBodyGyroJerk.mean.X          Numeric       -0.142960523    -0.02818617
+  164   tBodyGyroJerk.mean.Y          Numeric       -0.072874053    -0.019487316
+  165   tBodyGyroJerk.mean.Z          Numeric       -0.086643556    -0.022323695
+  166   tBodyGyroJerk.std.X         Numeric     -0.994628667    0.022369778
+  167   tBodyGyroJerk.std.Y         Numeric     -0.995451802    0.034647761
+  168   tBodyGyroJerk.std.Z         Numeric     -0.994033792    -0.089650443
+  169   tBodyGyroJerk.mad.X         Numeric     -0.994887087    0.04687384
+  170   tBodyGyroJerk.mad.Y         Numeric     -0.995859642    -0.043292146
+  171   tBodyGyroJerk.mad.Z         Numeric     -0.994892115    -0.136261072
+  172   tBodyGyroJerk.max.X         Numeric     -0.994253732    -0.079076934
+  173   tBodyGyroJerk.max.Y         Numeric     -0.995429329    0.003155193
+  174   tBodyGyroJerk.max.Z         Numeric     -0.991418124    -0.09235664
+  175   tBodyGyroJerk.min.X         Numeric     0.114712678   0.994212612
+  176   tBodyGyroJerk.min.Y         Numeric     0.124116928   0.996312601
+  177   tBodyGyroJerk.min.Z         Numeric     0.248043754   0.994742586
+  178   tBodyGyroJerk.sma             Numeric       -0.995468495    -0.153785425
+  179   tBodyGyroJerk.energy.X      Numeric     -0.99995085   -0.438131897
+  180   tBodyGyroJerk.energy.Y      Numeric     -0.9999706    -0.337429567
+  181   tBodyGyroJerk.energy.Z      Numeric     -0.999927447    -0.553259957
+  182   tBodyGyroJerk.iqr.X         Numeric     -0.995032381    0.044416784
+  183   tBodyGyroJerk.iqr.Y         Numeric     -0.99611132   -0.152943417
+  184   tBodyGyroJerk.iqr.Z         Numeric     -0.995760323    -0.170297455
+  185   tBodyGyroJerk.entropy.X     Numeric     -0.751607841    0.649999289
+  186   tBodyGyroJerk.entropy.Y     Numeric     -0.705415671    0.667241106
+  187   tBodyGyroJerk.entropy.Z     Numeric     -0.698061005    0.683004707
+  188   tBodyGyroJerk.arCoeff.X1      Numeric       -0.373943866    0.273208703
+  189   tBodyGyroJerk.arCoeff.X2      Numeric       -0.140953778    0.344239891
+  190   tBodyGyroJerk.arCoeff.X3      Numeric       -0.012228037    0.346829595
+  191   tBodyGyroJerk.arCoeff.X4      Numeric       -0.017094046    0.411861274
+  192   tBodyGyroJerk.arCoeff.Y1      Numeric       -0.4144548    0.098335766
+  193   tBodyGyroJerk.arCoeff.Y2      Numeric       0.027513601   0.441145147
+  194   tBodyGyroJerk.arCoeff.Y3      Numeric       -0.10861607   0.282675757
+  195   tBodyGyroJerk.arCoeff.Y4      Numeric       -0.226051688    0.329480719
+  196   tBodyGyroJerk.arCoeff.Z1      Numeric       -0.521081677    0.357567758
+  197   tBodyGyroJerk.arCoeff.Z2      Numeric       -0.196455209    0.309240723
+  198   tBodyGyroJerk.arCoeff.Z3      Numeric       -0.312886819    0.306337166
+  199   tBodyGyroJerk.arCoeff.Z4      Numeric       -0.203084786    0.240375403
+  200   tBodyGyroJerk.correlation.XY    Numeric   -0.281485569  0.480328962
+  201   tBodyGyroJerk.correlation.XZ    Numeric   -0.310316366  0.461565921
+  202   tBodyGyroJerk.correlation.YZ    Numeric   -0.442660612  0.270362101
+  203   tBodyAccMag.mean              Numeric       -0.98815477   0.272408893
+  204   tBodyAccMag.std             Numeric     -0.98601055   0.115290283
+  205   tBodyAccMag.mad             Numeric     -0.987344931    -0.021390681
+  206   tBodyAccMag.max             Numeric     -0.984433049    0.168291253
+  207   tBodyAccMag.min             Numeric     -0.994005061    -0.560978072
+  208   tBodyAccMag.sma             Numeric     -0.98815477   0.272408893
+  209   tBodyAccMag.energy          Numeric     -0.999672086    -0.121079417
+  210   tBodyAccMag.iqr             Numeric     -0.98775442   -0.163680591
+  211   tBodyAccMag.entropy         Numeric     -0.679677402    0.866377089
+  212   tBodyAccMag.arCoeff1          Numeric       -0.478141829    0.268735352
+  213   tBodyAccMag.arCoeff2          Numeric       -0.228745017    0.354914936
+  214   tBodyAccMag.arCoeff3          Numeric       -0.247718109    0.286563854
+  215   tBodyAccMag.arCoeff4          Numeric       -0.330083757    0.21507262
+  216   tGravityAccMag.mean         Numeric     -0.98815477   0.272408893
+  217   tGravityAccMag.std          Numeric     -0.98601055   0.115290283
+  218   tGravityAccMag.mad          Numeric     -0.987344931    -0.021390681
+  219   tGravityAccMag.max          Numeric     -0.984433049    0.168291253
+  220   tGravityAccMag.min          Numeric     -0.994005061    -0.560978072
+  221   tGravityAccMag.sma          Numeric     -0.98815477   0.272408893
+  222   tGravityAccMag.energy         Numeric       -0.999672086    -0.121079417
+  223   tGravityAccMag.iqr          Numeric     -0.98775442   -0.163680591
+  224   tGravityAccMag.entropy      Numeric     -0.679677402    0.866377089
+  225   tGravityAccMag.arCoeff1     Numeric     -0.478141829    0.268735352
+  226   tGravityAccMag.arCoeff2     Numeric     -0.228745017    0.354914936
+  227   tGravityAccMag.arCoeff3     Numeric     -0.247718109    0.286563854
+  228   tGravityAccMag.arCoeff4     Numeric     -0.330083757    0.21507262
+  229   tBodyAccJerkMag.mean          Numeric       -0.992520308    0.15669441
+  230   tBodyAccJerkMag.std         Numeric     -0.992125539    0.106104571
+  231   tBodyAccJerkMag.mad         Numeric     -0.992950638    0.05619883
+  232   tBodyAccJerkMag.max         Numeric     -0.9905074    0.099961627
+  233   tBodyAccJerkMag.min         Numeric     -0.985908832    -0.235644582
+  234   tBodyAccJerkMag.sma         Numeric     -0.992520308    0.15669441
+  235   tBodyAccJerkMag.energy      Numeric     -0.999846008    -0.268901924
+  236   tBodyAccJerkMag.iqr         Numeric     -0.993981032    -0.081098421
+  237   tBodyAccJerkMag.entropy           Numeric -0.83424897     0.821401633
+  238   tBodyAccJerkMag.arCoeff1            Numeric -0.324796425    0.335308857
+  239   tBodyAccJerkMag.arCoeff2            Numeric -0.260546359    0.323086413
+  240   tBodyAccJerkMag.arCoeff3            Numeric -0.312000987    0.050555065
+  241   tBodyAccJerkMag.arCoeff4            Numeric -0.233444622    0.204699054
+  242   tBodyGyroMag.mean                   Numeric -0.977911687    0.151733596
+  243   tBodyGyroMag.std                    Numeric -0.981609252    -0.014906442
+  244   tBodyGyroMag.mad                  Numeric -0.978774696  0.076719613
+  245   tBodyGyroMag.max                  Numeric -0.985281281  -0.023922552
+  246   tBodyGyroMag.min                    Numeric -0.981695369    -0.163294243
+  247   tBodyGyroMag.sma                    Numeric -0.977911687    0.151733596
+  248   tBodyGyroMag.energy               Numeric -0.99898085     -0.263686346
+  249   tBodyGyroMag.iqr                  Numeric -0.978399654  0.050970984
+  250   tBodyGyroMag.entropy              Numeric -0.452545602  0.849966596
+  251   tBodyGyroMag.arCoeff1               Numeric -0.429407107    0.380022363
+  252   tBodyGyroMag.arCoeff2               Numeric -0.335142444    0.308916386
+  253   tBodyGyroMag.arCoeff3             Numeric -0.165238492  0.279008512
+  254   tBodyGyroMag.arCoeff4               Numeric -0.289895593    0.26665059
+  255   tBodyGyroJerkMag.mean               Numeric -0.995454682    -0.13668194
+  256   tBodyGyroJerkMag.std                Numeric -0.995202382    -0.002561333
+  257   tBodyGyroJerkMag.mad                Numeric -0.995575003    -0.115021617
+  258   tBodyGyroJerkMag.max                Numeric -0.994791725    -0.004104761
+  259   tBodyGyroJerkMag.min                Numeric -0.992413951    -0.344509124
+  260   tBodyGyroJerkMag.sma                Numeric -0.995454682    -0.13668194
+  261   tBodyGyroJerkMag.energy           Numeric -0.999956134  -0.506492571
+  262   tBodyGyroJerkMag.iqr                Numeric -0.996226112    -0.271585136
+  263   tBodyGyroJerkMag.entropy            Numeric -0.746372697    0.90270557
+  264   tBodyGyroJerkMag.arCoeff1           Numeric 0.019218679   0.501045668
+  265   tBodyGyroJerkMag.arCoeff2           Numeric -0.486018363    -0.0150489
+  266   tBodyGyroJerkMag.arCoeff3           Numeric -0.46876913   0.158830104
+  267   tBodyGyroJerkMag.arCoeff4           Numeric -0.32089448   0.268099948
+  268   fBodyAcc.mean.X                   Numeric -0.992904276  0.1451902
+  269   fBodyAcc.mean.Y                   Numeric -0.984124512  0.483700036
+  270   fBodyAcc.mean.Z                   Numeric -0.985466995  0.152033302
+  271   fBodyAcc.std.X                    Numeric -0.994285743  0.2080939
+  272   fBodyAcc.std.Y                    Numeric -0.983890009  0.541344643
+  273   fBodyAcc.std.Z                    Numeric -0.980763093  0.157087448
+  274   fBodyAcc.mad.X                    Numeric -0.993176705  0.214191902
+  275   fBodyAcc.mad.Y                    Numeric -0.985139769  0.560482668
+  276   fBodyAcc.mad.Z                    Numeric -0.983276859  0.187820449
+  277   fBodyAcc.max.X                    Numeric -0.995200499  0.151606284
+  278   fBodyAcc.max.Y                    Numeric -0.985622843  0.188516173
+  279   fBodyAcc.max.Z                    Numeric -0.976743455  0.2891663
+  280   fBodyAcc.min.X                    Numeric -0.994993692  -0.525844437
+  281   fBodyAcc.min.Y                    Numeric -0.99224888     -0.605917754
+  282   fBodyAcc.min.Z                    Numeric -0.992324041  -0.723242733
+  283   fBodyAcc.sma                        Numeric -0.988702583    0.284159443
+  284   fBodyAcc.energy.X                   Numeric -0.999937299    -0.219551259
+  285   fBodyAcc.energy.Y                 Numeric -0.999612558  0.285998727
+  286   fBodyAcc.energy.Z                   Numeric -0.999463162    -0.174682993
+  287   fBodyAcc.iqr.X                    Numeric -0.991358441  0.057198158
+  288   fBodyAcc.iqr.Y                    Numeric -0.989289917  0.113565503
+  289   fBodyAcc.iqr.Z                    Numeric -0.984692709  -0.018715188
+  290   fBodyAcc.entropy.X                Numeric -0.964643752  0.735449067
+  291   fBodyAcc.entropy.Y                Numeric -0.910295026  0.693317131
+  292   fBodyAcc.entropy.Z                Numeric -0.855424844  0.729188317
+  293   fBodyAcc.maxInds.X                Numeric -0.95818399     -0.525423728
+  294   fBodyAcc.maxInds.Y                Numeric -0.980392157  -0.516666667
+  295   fBodyAcc.maxInds.Z                Numeric -0.989441931  -0.527112232
+  296   fBodyAcc.meanFreq.X               Numeric -0.526371531  0.096100547
+  297   fBodyAcc.meanFreq.Y               Numeric -0.269296887  0.310471301
+  298   fBodyAcc.meanFreq.Z               Numeric -0.433510068  0.356208528
+  299   fBodyAcc.skewness.X               Numeric -0.51806982     0.410791622
+  300   fBodyAcc.kurtosis.X               Numeric -0.833976616  0.184027883
+  301   fBodyAcc.skewness.Y               Numeric -0.635149439  0.136347867
+  302   fBodyAcc.kurtosis.Y               Numeric -0.906480719  -0.134333562
+  303   fBodyAcc.skewness.Z               Numeric -0.609954277  0.254351674
+  304   fBodyAcc.kurtosis.Z               Numeric -0.807373817  0.023549243
+  305   fBodyAcc.bandsEnergy.18           Numeric -0.999946236  -0.218050344
+  306   fBodyAcc.bandsEnergy.916            Numeric -0.999951344    -0.399442256
+  307   fBodyAcc.bandsEnergy.1724           Numeric -0.999897312    -0.325985086
+  308   fBodyAcc.bandsEnergy.2532           Numeric -0.999896617    -0.403785619
+  309   fBodyAcc.bandsEnergy.3340           Numeric -0.999879938    -0.570290953
+  310   fBodyAcc.bandsEnergy.4148           Numeric -0.999884063    -0.540496688
+  311   fBodyAcc.bandsEnergy.4956           Numeric -0.999933968    -0.725613149
+  312   fBodyAcc.bandsEnergy.5764           Numeric -0.999971457    -0.775790052
+  313   fBodyAcc.bandsEnergy.116            Numeric -0.999945104    -0.201817926
+  314   fBodyAcc.bandsEnergy.1732           Numeric -0.999887057    -0.30292779
+  315   fBodyAcc.bandsEnergy.3348           Numeric -0.999896552    -0.57747531
+  316   fBodyAcc.bandsEnergy.4964           Numeric -0.999946547    -0.755492321
+  317   fBodyAcc.bandsEnergy.124            Numeric -0.999940336    -0.215552657
+  318   fBodyAcc.bandsEnergy.2548           Numeric -0.999885205    -0.371162665
+  319   fBodyAcc.bandsEnergy.18.1           Numeric -0.999638907    0.074970539
+  320   fBodyAcc.bandsEnergy.916.1        Numeric -0.999818367  -0.161506505
+  321   fBodyAcc.bandsEnergy.1724.1       Numeric -0.999819233  -0.217846188
+  322   fBodyAcc.bandsEnergy.2532.1       Numeric -0.999784082  -0.294049202
+  323   fBodyAcc.bandsEnergy.3340.1       Numeric -0.999654159  -0.298041539
+  324   fBodyAcc.bandsEnergy.4148.1       Numeric -0.999606753  -0.50371237
+  325   fBodyAcc.bandsEnergy.4956.1       Numeric -0.99964182     -0.5820083
+  326   fBodyAcc.bandsEnergy.5764.1       Numeric -0.999848398  -0.737017121
+  327   fBodyAcc.bandsEnergy.116.1        Numeric -0.999611685  0.255043926
+  328   fBodyAcc.bandsEnergy.1732.1       Numeric -0.999770482  -0.146781777
+  329   fBodyAcc.bandsEnergy.3348.1       Numeric -0.999628936  -0.30236974
+  330   fBodyAcc.bandsEnergy.4964.1       Numeric -0.999717719  -0.639517804
+  331   fBodyAcc.bandsEnergy.124.1        Numeric -0.999614698  0.284921651
+  332   fBodyAcc.bandsEnergy.2548.1       Numeric -0.999746235  -0.260710125
+  333   fBodyAcc.bandsEnergy.18.2         Numeric -0.999458456  -0.15336191
+  334   fBodyAcc.bandsEnergy.916.2        Numeric -0.99969085     -0.342223888
+  335   fBodyAcc.bandsEnergy.1724.2       Numeric -0.99979752     -0.340899552
+  336   fBodyAcc.bandsEnergy.2532.2       Numeric -0.999807664  -0.639471125
+  337   fBodyAcc.bandsEnergy.3340.2       Numeric -0.999785629  -0.700302414
+  338   fBodyAcc.bandsEnergy.4148.2       Numeric -0.999548202  -0.567470408
+  339   fBodyAcc.bandsEnergy.4956.2       Numeric -0.999581352  -0.629809099
+  340   fBodyAcc.bandsEnergy.5764.2       Numeric -0.999778876  -0.784313238
+  341   fBodyAcc.bandsEnergy.116.2        Numeric -0.999477628  -0.179701049
+  342   fBodyAcc.bandsEnergy.1732.2       Numeric -0.999831877  -0.524867402
+  343   fBodyAcc.bandsEnergy.3348.2       Numeric -0.999754432  -0.656198835
+  344   fBodyAcc.bandsEnergy.4964.2       Numeric -0.999644001  -0.676178865
+  345   fBodyAcc.bandsEnergy.124.2        Numeric   -0.999470102    -0.178944413
+  346   fBodyAcc.bandsEnergy.2548.2       Numeric -0.999809246  -0.644254919
+  347   fBodyAccJerk.mean.X               Numeric -0.993447341  0.123664963
+  348   fBodyAccJerk.mean.Y               Numeric -0.988523632  0.216191623
+  349   fBodyAccJerk.mean.Z               Numeric -0.989636163  0.012115886
+  350   fBodyAccJerk.std.X                Numeric -0.994239365  0.15126601
+  351   fBodyAccJerk.std.Y                Numeric -0.989872073  0.3170792
+  352   fBodyAccJerk.std.Z                Numeric -0.991610484  -0.166570298
+  353   fBodyAccJerk.mad.X                Numeric -0.992545095  0.322445547
+  354   fBodyAccJerk.mad.Y                Numeric -0.990001069  0.289645222
+  355   fBodyAccJerk.mad.Z                Numeric -0.99085921     -0.099381371
+  356   fBodyAccJerk.max.X                Numeric -0.995283578  -0.019228987
+  357   fBodyAccJerk.max.Y                Numeric -0.990353071  0.001190068
+  358   fBodyAccJerk.max.Z                Numeric -0.991337277  -0.117362372
+  359   fBodyAccJerk.min.X                Numeric -0.99593684     -0.601416733
+  360   fBodyAccJerk.min.Y                Numeric -0.991405724  -0.552787218
+  361   fBodyAccJerk.min.Z                Numeric -0.989029865  -0.558597061
+  362   fBodyAccJerk.sma                    Numeric -0.991242552    0.210335763
+  363   fBodyAccJerk.energy.X             Numeric -0.999923921  -0.224634542
+  364   fBodyAccJerk.energy.Y               Numeric -0.999804019    -0.122668945
+  365   fBodyAccJerk.energy.Z               Numeric -0.999824376    -0.542048921
+  366   fBodyAccJerk.iqr.X                Numeric -0.991719886  0.178674622
+  367   fBodyAccJerk.iqr.Y                Numeric -0.991313242  -0.086293317
+  368   fBodyAccJerk.iqr.Z                Numeric -0.988068103  -0.099704198
+  369   fBodyAccJerk.entropy.X            Numeric -0.996516943  0.747942808
+  370   fBodyAccJerk.entropy.Y            Numeric -0.997353056  0.78822687
+  371   fBodyAccJerk.entropy.Z            Numeric -0.992804936  0.648084827
+  372   fBodyAccJerk.maxInds.X            Numeric -0.820869565  -0.106415094
+  373   fBodyAccJerk.maxInds.Y            Numeric -0.668695652  -0.203544304
+  374   fBodyAccJerk.maxInds.Z            Numeric -0.829803922  -0.058823529
+  375   fBodyAccJerk.meanFreq.X           Numeric -0.518081423  0.308678044
+  376   fBodyAccJerk.meanFreq.Y           Numeric -0.553696358  0.109978978
+  377   fBodyAccJerk.meanFreq.Z           Numeric -0.537454225  0.159333689
+  378   fBodyAccJerk.skewness.X           Numeric -0.531344333  0.089747218
+  379   fBodyAccJerk.kurtosis.X           Numeric -0.856458599  -0.361641202
+  380   fBodyAccJerk.skewness.Y           Numeric -0.544274935  -0.069135851
+  381   fBodyAccJerk.kurtosis.Y           Numeric -0.902622645  -0.501546946
+  382   fBodyAccJerk.skewness.Z           Numeric -0.625980541  -0.067490855
+  383   fBodyAccJerk.kurtosis.Z           Numeric -0.89199511     -0.372729189
+  384   fBodyAccJerk.bandsEnergy.18       Numeric -0.999985635  -0.290456301
+  385   fBodyAccJerk.bandsEnergy.916        Numeric -0.999955447    -0.38884718
+  386   fBodyAccJerk.bandsEnergy.1724       Numeric -0.999926949    -0.400064103
+  387   fBodyAccJerk.bandsEnergy.2532       Numeric -0.999905433    -0.401696057
+  388   fBodyAccJerk.bandsEnergy.3340       Numeric -0.999899394    -0.56707252
+  389   fBodyAccJerk.bandsEnergy.4148       Numeric -0.99988719   -0.439747469
+  390   fBodyAccJerk.bandsEnergy.4956       Numeric -0.999937164    -0.684126781
+  391   fBodyAccJerk.bandsEnergy.5764       Numeric -0.99998925   -0.867692446
+  392   fBodyAccJerk.bandsEnergy.116        Numeric -0.999963959    -0.291195134
+  393   fBodyAccJerk.bandsEnergy.1732       Numeric -0.999904188    -0.302377868
+  394   fBodyAccJerk.bandsEnergy.3348       Numeric -0.99989977   -0.505058855
+  395   fBodyAccJerk.bandsEnergy.4964       Numeric -0.999934198    -0.677357073
+  396   fBodyAccJerk.bandsEnergy.124        Numeric -0.999945732    -0.223000737
+  397   fBodyAccJerk.bandsEnergy.2548     Numeric   -0.999866014    -0.225696403
+  398   fBodyAccJerk.bandsEnergy.18.1       Numeric -0.99975922   0.064283733
+  399   fBodyAccJerk.bandsEnergy.916.1    Numeric   -0.999893962    -0.340841101
+  400   fBodyAccJerk.bandsEnergy.1724.1   Numeric   -0.999850035    -0.093715063
+  401   fBodyAccJerk.bandsEnergy.2532.1   Numeric   -0.99984421   -0.299235168
+  402   fBodyAccJerk.bandsEnergy.3340.1   Numeric   -0.999780393    -0.389033559
+  403   fBodyAccJerk.bandsEnergy.4148.1   Numeric   -0.999683406    -0.449110251
+  404   fBodyAccJerk.bandsEnergy.4956.1   Numeric   -0.999796577    -0.664341717
+  405   fBodyAccJerk.bandsEnergy.5764.1   Numeric   -0.999958444    -0.835377441
+  406   fBodyAccJerk.bandsEnergy.116.1    Numeric   -0.999842986    -0.151615219
+  407   fBodyAccJerk.bandsEnergy.1732.1   Numeric   -0.999826213    -0.160653961
+  408   fBodyAccJerk.bandsEnergy.3348.1   Numeric   -0.999719898    -0.2776565
+  409   fBodyAccJerk.bandsEnergy.4964.1   Numeric   -0.999817985    -0.689964823
+  410   fBodyAccJerk.bandsEnergy.124.1    Numeric   -0.999821379    0.016163679
+  411   fBodyAccJerk.bandsEnergy.2548.1   Numeric   -0.999816207    -0.281508688
+  412   fBodyAccJerk.bandsEnergy.18.2       Numeric -0.99977819   -0.374180319
+  413   fBodyAccJerk.bandsEnergy.916.2    Numeric   -0.999742414    -0.313521768
+  414   fBodyAccJerk.bandsEnergy.1724.2   Numeric   -0.999840244    -0.468447623
+  415   fBodyAccJerk.bandsEnergy.2532.2   Numeric   -0.999854873    -0.647364022
+  416   fBodyAccJerk.bandsEnergy.3340.2   Numeric   -0.99981461   -0.709705872
+  417   fBodyAccJerk.bandsEnergy.4148.2   Numeric   -0.999615633    -0.57455954
+  418   fBodyAccJerk.bandsEnergy.4956.2   Numeric   -0.999571336    -0.551951742
+  419   fBodyAccJerk.bandsEnergy.5764.2   Numeric   -0.999888549    -0.814633788
+  420   fBodyAccJerk.bandsEnergy.116.2    Numeric   -0.9996954    -0.239435939
+  421   fBodyAccJerk.bandsEnergy.1732.2   Numeric   -0.999869134    -0.623443619
+  422   fBodyAccJerk.bandsEnergy.3348.2   Numeric   -0.999744498    -0.661341949
+  423   fBodyAccJerk.bandsEnergy.4964.2   Numeric   -0.99957828   -0.553916291
+  424   fBodyAccJerk.bandsEnergy.124.2    Numeric   -0.999787507    -0.346875139
+  425   fBodyAccJerk.bandsEnergy.2548.2   Numeric   -0.999836611    -0.652877072
+  426   fBodyGyro.mean.X                    Numeric -0.990851583    0.170660621
+  427   fBodyGyro.mean.Y                    Numeric -0.989988612    0.147237822
+  428   fBodyGyro.mean.Z                    Numeric -0.985797603    0.203515649
+  429   fBodyGyro.std.X                   Numeric   -0.992638494    -0.109417268
+  430   fBodyGyro.std.Y                   Numeric   -0.988164575    0.153371045
+  431   fBodyGyro.std.Z                   Numeric   -0.985780964    0.039567403
+  432   fBodyGyro.mad.X                   Numeric   -0.991494878    0.089265822
+  433   fBodyGyro.mad.Y                   Numeric   -0.99006544   0.076573726
+  434   fBodyGyro.mad.Z                   Numeric   -0.985107973    0.262050997
+  435   fBodyGyro.max.X                   Numeric   -0.992234099    -0.140881838
+  436   fBodyGyro.max.Y                   Numeric   -0.989090881    0.27484192
+  437   fBodyGyro.max.Z                   Numeric   -0.988506346    -0.209920175
+  438   fBodyGyro.min.X                   Numeric   -0.996122323    -0.701276097
+  439   fBodyGyro.min.Y                   Numeric   -0.994940576    -0.64924884
+  440   fBodyGyro.min.Z                   Numeric   -0.9936622    -0.739356077
+  441   fBodyGyro.sma                       Numeric -0.988756893    0.107554394
+  442   fBodyGyro.energy.X                Numeric   -0.999916166    -0.48727338
+  443   fBodyGyro.energy.Y                Numeric   -0.999839444    -0.326750039
+  444   fBodyGyro.energy.Z                Numeric   -0.999600363    -0.309269154
+  445   fBodyGyro.iqr.X                   Numeric   -0.992824422    0.082085734
+  446   fBodyGyro.iqr.Y                   Numeric   -0.993567346    0.118121533
+  447   fBodyGyro.iqr.Z                   Numeric   -0.990793089    0.047752417
+  448   fBodyGyro.entropy.X               Numeric   -0.841704941    0.73510794
+  449   fBodyGyro.entropy.Y               Numeric   -0.784679671    0.791591865
+  450   fBodyGyro.entropy.Z               Numeric   -0.83639044   0.658060464
+  451   fBodyGyro.maxInds.X               Numeric   -0.97111111   -0.385620914
+  452   fBodyGyro.maxInds.Y               Numeric   -0.980286738    -0.24157706
+  453   fBodyGyro.maxInds.Z               Numeric   -0.991886409    -0.416445622
+  454   fBodyGyro.meanFreq.X                Numeric -0.379787972    0.22989671
+  455   fBodyGyro.meanFreq.Y              Numeric   -0.618509935    0.093022172
+  456   fBodyGyro.meanFreq.Z              Numeric   -0.401817169    0.23212543
+  457   fBodyGyro.skewness.X              Numeric   -0.501211039    0.350212123
+  458   fBodyGyro.kurtosis.X                Numeric -0.772269786    0.142798482
+  459   fBodyGyro.skewness.Y                Numeric -0.502971434    0.525507749
+  460   fBodyGyro.kurtosis.Y                Numeric -0.840575262    0.321140091
+  461   fBodyGyro.skewness.Z                Numeric -0.54906825   0.146765818
+  462   fBodyGyro.kurtosis.Z                Numeric -0.834101814    -0.127910307
+  463   fBodyGyro.bandsEnergy.18            Numeric -0.999926548    -0.569187109
+  464   fBodyGyro.bandsEnergy.916           Numeric -0.999943335    -0.434283804
+  465   fBodyGyro.bandsEnergy.1724        Numeric   -0.999943014    -0.490635797
+  466   fBodyGyro.bandsEnergy.2532        Numeric   -0.999955378    -0.695405907
+  467   fBodyGyro.bandsEnergy.3340        Numeric   -0.999925866    -0.625452814
+  468   fBodyGyro.bandsEnergy.4148        Numeric   -0.999896312    -0.651132324
+  469   fBodyGyro.bandsEnergy.4956        Numeric   -0.999901359    -0.748483246
+  470   fBodyGyro.bandsEnergy.5764        Numeric   -0.999919815    -0.849269574
+  471   fBodyGyro.bandsEnergy.116           Numeric -0.999921884    -0.517867432
+  472   fBodyGyro.bandsEnergy.1732          Numeric -0.999938037    -0.46602129
+  473   fBodyGyro.bandsEnergy.3348        Numeric   -0.999907783    -0.598244625
+  474   fBodyGyro.bandsEnergy.4964        Numeric   -0.999909538    -0.80940448
+  475   fBodyGyro.bandsEnergy.124           Numeric -0.999920116    -0.49833408
+  476   fBodyGyro.bandsEnergy.2548        Numeric   -0.999936085    -0.664032541
+  477   fBodyGyro.bandsEnergy.18.1        Numeric   -0.999766602    -0.129115293
+  478   fBodyGyro.bandsEnergy.916.1       Numeric   -0.999972161    -0.628660028
+  479   fBodyGyro.bandsEnergy.1724.1        Numeric -0.99998583   -0.244606475
+  480   fBodyGyro.bandsEnergy.2532.1        Numeric -0.999981808    -0.674400805
+  481   fBodyGyro.bandsEnergy.3340.1        Numeric -0.999974719    -0.775116289
+  482   fBodyGyro.bandsEnergy.4148.1        Numeric -0.999939405    -0.657852112
+  483   fBodyGyro.bandsEnergy.4956.1        Numeric -0.999922581    -0.577454879
+  484   fBodyGyro.bandsEnergy.5764.1        Numeric -0.999940142    -0.816105264
+  485   fBodyGyro.bandsEnergy.116.1       Numeric   -0.999825546    -0.32785707
+  486   fBodyGyro.bandsEnergy.1732.1        Numeric -0.99997988   -0.228435763
+  487   fBodyGyro.bandsEnergy.3348.1        Numeric -0.999967623    -0.748735953
+  488   fBodyGyro.bandsEnergy.4964.1        Numeric -0.999919684    -0.623362834
+  489   fBodyGyro.bandsEnergy.124.1       Numeric   -0.999826318    -0.289366111
+  490   fBodyGyro.bandsEnergy.2548.1        Numeric -0.999974627    -0.67727923
+  491   fBodyGyro.bandsEnergy.18.2        Numeric   -0.999638772    -0.490677943
+  492   fBodyGyro.bandsEnergy.916.2       Numeric   -0.999912679    -0.494160018
+  493   fBodyGyro.bandsEnergy.1724.2        Numeric -0.99992903   -0.496040759
+  494   fBodyGyro.bandsEnergy.2532.2        Numeric -0.999942851    -0.72121148
+  495   fBodyGyro.bandsEnergy.3340.2        Numeric -0.999931553    -0.795667023
+  496   fBodyGyro.bandsEnergy.4148.2        Numeric -0.999871027    -0.726773554
+  497   fBodyGyro.bandsEnergy.4956.2        Numeric -0.999840534    -0.726257982
+  498   fBodyGyro.bandsEnergy.5764.2        Numeric -0.999877154    -0.799591079
+  499   fBodyGyro.bandsEnergy.116.2       Numeric   -0.999616829    -0.36749331
+  500   fBodyGyro.bandsEnergy.1732.2        Numeric -0.999905196    -0.446105529
+  501   fBodyGyro.bandsEnergy.3348.2        Numeric -0.999920887    -0.776380028
+  502   fBodyGyro.bandsEnergy.4964.2        Numeric -0.999854974    -0.758140924
+  503   fBodyGyro.bandsEnergy.124.2       Numeric   -0.999606809    -0.319292484
+  504   fBodyGyro.bandsEnergy.2548.2        Numeric -0.999934908    -0.738330627
+  505   fBodyAccMag.mean                    Numeric -0.987054491    0.20319825
+  506   fBodyAccMag.std                   Numeric   -0.986869589    -0.047258002
+  507   fBodyAccMag.mad                   Numeric   -0.985773238    0.088749071
+  508   fBodyAccMag.max                   Numeric   -0.988916871    -0.23263496
+  509   fBodyAccMag.min                   Numeric   -0.990366551    -0.668610588
+  510   fBodyAccMag.sma                   Numeric   -0.987054491    0.20319825
+  511   fBodyAccMag.energy                Numeric   -0.999630848    -0.367908352
+  512   fBodyAccMag.iqr                   Numeric   -0.990200407    -0.076948082
+  513   fBodyAccMag.entropy               Numeric   -0.94969384   0.701458588
+  514   fBodyAccMag.maxInds               Numeric   -0.964841108    -0.3722969
+  515   fBodyAccMag.meanFreq                Numeric -0.201645109    0.415378412
+  516   fBodyAccMag.skewness                Numeric -0.616858327    -0.039651803
+  517   fBodyAccMag.kurtosis              Numeric   -0.85484861   -0.304140717
+  518   fBodyBodyAccJerkMag.mean            Numeric -0.991797833    0.171259309
+  519   fBodyBodyAccJerkMag.std           Numeric   -0.991773101    0.049420986
+  520   fBodyBodyAccJerkMag.mad           Numeric   -0.989755478    0.126359194
+  521   fBodyBodyAccJerkMag.max           Numeric   -0.993511563    -0.016122792
+  522   fBodyBodyAccJerkMag.min           Numeric   -0.98811491   -0.361853972
+  523   fBodyBodyAccJerkMag.sma           Numeric   -0.991797833    0.171259309
+  524   fBodyBodyAccJerkMag.energy        Numeric   -0.999857617    -0.309915997
+  525   fBodyBodyAccJerkMag.iqr           Numeric   -0.990659858    0.006309277
+  526   fBodyBodyAccJerkMag.entropy       Numeric   -0.997829787    0.599075997
+  527   fBodyBodyAccJerkMag.maxInds       Numeric   -0.960439561    -0.743008313
+  528   fBodyBodyAccJerkMag.meanFreq        Numeric -0.09392623   0.466887072
+  529   fBodyBodyAccJerkMag.skewness        Numeric -0.645963846    0.175653054
+  530   fBodyBodyAccJerkMag.kurtosis        Numeric -0.884914371    -0.099882926
+  531   fBodyBodyGyroMag.mean               Numeric -0.986374765    0.005529408
+  532   fBodyBodyGyroMag.std                Numeric -0.981689189    -0.128658828
+  533   fBodyBodyGyroMag.mad                Numeric -0.984158427    -0.054591233
+  534   fBodyBodyGyroMag.max                Numeric -0.979971425    -0.199849832
+  535   fBodyBodyGyroMag.min                Numeric -0.990572826    -0.569621608
+  536   fBodyBodyGyroMag.sma                Numeric -0.986374765    0.005529408
+  537   fBodyBodyGyroMag.energy           Numeric   -0.99917719   -0.39907984
+  538   fBodyBodyGyroMag.iqr                Numeric -0.989618515    -0.025868335
+  539   fBodyBodyGyroMag.entropy            Numeric -0.820978238    0.766668378
+  540   fBodyBodyGyroMag.maxInds            Numeric -0.981900453    -0.651778328
+  541   fBodyBodyGyroMag.meanFreq           Numeric -0.362457279    0.366948782
+  542   fBodyBodyGyroMag.skewness           Numeric -0.533518011    0.041213728
+  543   fBodyBodyGyroMag.kurtosis           Numeric -0.813375549    -0.240685035
+  544   fBodyBodyGyroJerkMag.mean           Numeric -0.995160519    -0.048468679
+  545   fBodyBodyGyroJerkMag.std            Numeric -0.995453012    -0.007897617
+  546   fBodyBodyGyroJerkMag.mad            Numeric -0.994944632    0.06006904
+  547   fBodyBodyGyroJerkMag.max            Numeric -0.995989929    -0.104989738
+  548   fBodyBodyGyroJerkMag.min            Numeric -0.994995304    -0.395324327
+  549   fBodyBodyGyroJerkMag.sma            Numeric -0.995160519    -0.048468679
+  550   fBodyBodyGyroJerkMag.energy       Numeric   -0.999961254    -0.369444123
+  551   fBodyBodyGyroJerkMag.iqr            Numeric -0.99423732   0.000115831
+  552   fBodyBodyGyroJerkMag.entropy        Numeric -0.974828704    0.677610064
+  553   fBodyBodyGyroJerkMag.maxInds        Numeric -0.97997558   -0.779178338
+  554   fBodyBodyGyroJerkMag.meanFreq       Numeric -0.116974978    0.388435592
+  555   fBodyBodyGyroJerkMag.skewness       Numeric -0.575041934    0.098743134
+  556   fBodyBodyGyroJerkMag.kurtosis       Numeric -0.826708182    -0.212215816
+  557   angletBodyAccMeangravity            Numeric -0.121819876    0.09780581
+  558   angletBodyAccJerkMeangravityMean    Numeric -0.125523108    0.146217702
+  559   angletBodyGyroMeangravityMean       Numeric -0.321820139    0.28571207
+  560   angletBodyGyroJerkMeangravityMean   Numeric -0.181985274    0.118771671
+  561   angleXgravityMean                   Numeric -0.894907785    0.593311372
+  562   angleYgravityMean                   Numeric -0.575746949    0.380239075
+  563   angleZgravityMean                   Numeric -0.66761263   0.455747875
+
+</pre>
+
+</body>
+
+</html>
+

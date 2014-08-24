@@ -15,13 +15,11 @@ run_analysis <- function( dataFiles ) {
 ## utils
 ##
 ## Constants:
-## EWD      - Existing working directory - to be restored at the end of the analysis
 ## WD       - Working directory for the analysis.  
-## URL      - Datafile location
+## URL      - Datafile source location
 ## MD       - Directory to hold the merged dataset
 ## VARINDEX - Columns that contain mean and standard deviation, used in TidyDataset1
-  EWD <- getwd()
-  WD <- "/Users/woodst/Desktop/GCDProject"                        
+  WD <- getwd()                       
   URL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
   MD <- "/UCIMerged"
   VARINDEX <- c( 1:6, 41:46, 81:86, 121:126, 161:166, 201:202, 214:215, 227:228, 240:241, 253:254, 266:271, 345:350, 424:429, 503:504, 516:517, 529:530, 542:543 ) 
@@ -200,18 +198,29 @@ run_analysis <- function( dataFiles ) {
   tidyDS1$subject <- allSubjects
   tidyDS1$activity <- actIndex[,2][allActs]
   tidyDS1 <- cbind(tidyDS1, allVars[,VARINDEX] )
-  colnames(tidyDS1) <- c("subject", "activity", as.character( cn[ VARINDEX, 2 ]) ) 
+  colnames(tidyDS1) <- c("subject", "activity", gsub( "[\\(\\),]+", "", as.character( cn[ VARINDEX, 2 ]) ) ) 
   
-  write.table( tidyDS1, paste(WD, "/tidyData1.csv", sep=""), quote=FALSE, sep=",", row.names = FALSE)
-## ------------------------------------
-## Data Labels
-  
+  write.table( tidyDS1, paste(WD, "/tidyData1.txt", sep=""), quote=FALSE, sep=",", row.names = FALSE)
 
 ## ------------------------------------
-## Restore the user's previous working directory
-## perform other cleanup
-rm(allSubjects, trainSubjects,  allActs, trainActs,  allVars, trainVars )
-setwd( EWD )
+## Assignment Part 5:  Create a second tidy data set with averages for all variables and all subjects
+##
+  print("Creating tidy data set 2...")
+  tidyDS2 <- NULL
+
+  tidyDS2$subject <- allSubjects
+  tidyDS2$activity <- actIndex[,2][allActs]
+  tidyDS2 <- cbind(tidyDS2, allVars )
+  colnames(tidyDS2) <- c("subject", "activity", gsub( "[\\(\\),]+", "", as.character( cn[ ,2 ]) ) ) 
+
+  # Convert this into the second data set and write the file
+  result <- aggregate( tidyDS2[, 3:ncol(tidyDS2)], by=list( "subject" = tidyDS2$subject, "activity" = tidyDS2$activity ), mean)
+  write.table( result, paste(WD, "/tidyData2.txt", sep=""), quote=FALSE, sep=",", row.names = FALSE)
+
+## ------------------------------------
+## Cleanup
+rm(allSubjects, trainSubjects,  allActs, trainActs,  allVars, trainVars, tidyDS1, tidyDS2, result)
+print("Done!")
 
 }
 
