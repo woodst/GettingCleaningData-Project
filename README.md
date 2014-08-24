@@ -13,14 +13,14 @@ The WD variable is set to the working directory. The script will run if the data
 >> utils, dplyr
 
 ## Usage ##
-after varifying package dependencies and sourcing run_analysis(), simply run 
+after varifying package dependencies and sourcing run_analysis.R, assign the output of run_analysis to an appropriate variable:
   
-    run_analysis.R() 
+    tidyData <- run_analysis() 
 
-in the R console.  The first time you run the script it will create the MD directory and download and expand the dataset.
-The script will unzip the data file into the "UCI Har Dataset" directory and then proceed to merge the test and training data into a single data set that resides in the directory specified by MD. If you need to run the script again, it can detect the data file and will skip downloading it
+The first time you run the script it will create the MD directory and download and expand the dataset.
+The script will unzip the data file into the "UCI Har Dataset" directory and then proceed to merge the test and training data into a single data set that resides in the directory specified by MD, which by default is the UCIMerged directory. If you need to run the script again, it can detect the data file and will skip downloading it. 
 
-The script then generates the two tidy data sets, per the assignment instructions.
+The script then generates the two tidy data sets, per the assignment instructions, saving them in the working directory as tidyDS1.txt and tidyDS2.txt.  The script outputs tidyDS2 as a data frame.
 
 Run time on my Macbook Pro ( 2.4Ghz core 2 duo with 4GB of RAM ) is about three minutes.  The script will display it's progress as it executes.
 

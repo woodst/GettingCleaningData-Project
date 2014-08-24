@@ -219,9 +219,10 @@ run_analysis <- function( dataFiles ) {
 
 ## ------------------------------------
 ## Cleanup
-rm(allSubjects, trainSubjects,  allActs, trainActs,  allVars, trainVars, tidyDS1, tidyDS2, result)
+#rm(allSubjects, trainSubjects,  allActs, trainActs,  allVars, trainVars, tidyDS1, tidyDS2, result)
 print("Done!")
 
+tidyDS2
 }
 
 
